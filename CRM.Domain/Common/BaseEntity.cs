@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRM
+namespace CRM.Domain.Common
 {
-    public class Menu
+    public class BaseEntity : AuditableModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Group { get; set; }
-
     }
-
 }
