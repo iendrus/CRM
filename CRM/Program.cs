@@ -1,4 +1,10 @@
-﻿using System;
+﻿using CRM.App;
+using CRM.App.Abstract;
+using CRM.App.Common;
+using CRM.App.Concrete;
+using CRM.App.Managers;
+using CRM.Domain.Entity;
+using System;
 
 namespace CRM
 {
@@ -6,145 +12,67 @@ namespace CRM
     {
         static void Main(string[] args)
         {
-            MenuService menuActions = new MenuService();
-            menuActions.AddNewMenu(1, "Dodaj nowego Klienta", "main");
-            menuActions.AddNewMenu(2, "Znajdź Klienta", "main");
-            menuActions.AddNewMenu(3, "Wyświetl listę Klientów", "main");
-            menuActions.AddNewMenu(4, "Usun Klienta", "main");
-            menuActions.AddNewMenu(5, "Zakończ program", "main");
-            menuActions.AddNewMenu(1, "Wyszukaj wg Id Klienta", "customerFind");
-            menuActions.AddNewMenu(2, "Wyszukaj wg nazwiska", "customerFind");
-            menuActions.AddNewMenu(3, "Wyszukaj wg Numeru telefonu", "customerFind");
-            menuActions.AddNewMenu(1, "Usuń Klienta", "customerDetails");
-            menuActions.AddNewMenu(2, "Powrót do menu głównego", "customerDetails");
-
-
-            CustomerService customerService = new CustomerService();
-
+            MenuManager menuManager = new MenuManager();
+            CustomerManager customerManager = new CustomerManager();
             Console.WriteLine($"Witaj w systemie CRM!\r\n");
-            DisplayMenu("main");
             HandleMainManu();
 
-
-            void DisplayMenu(string group, bool clearView = false)
-                 // wyświetlanie menu w zależności od kontekstu
-            {
-
-                if (clearView)
-                {
-                    Console.Clear();
-                }
-                Console.WriteLine($"\r\nWybierz odpowiednią akcję i naciśnij Enter:\r\n");
-                foreach (var el in menuActions.GetAllItems())
-                {
-                    if (el.Group == group)
-                    {
-                        Console.WriteLine(el.Id + " - " + el.Name);
-                    }
-                }
-            }
-
-            int CheckChosen(string ChoosenIdMenu)
-                // sprawdza, czy wybrane przez uzytkownika menu jest OK
-                // jesli tak, zwraca wybrany element. W przeciwnym razie, zwraca 0.
-            {
-            int idMenu = 0;
-            int elId = 0;
-            if (int.TryParse(ChoosenIdMenu, out idMenu))
-            {
-                foreach (var el in menuActions.GetAllItems())
-                {
-                    if (el.Id == idMenu)
-                    {
-                        elId = el.Id;
-                        break;
-                    }
-                }
-            }
-            return elId;
-
-            }
-
             void HandleMainManu()
-            // metoda obslugująca główne Menu programu
             {
-                int chosenMenu = CheckChosen(Console.ReadLine());
+                int chosenMenu = menuManager.CreateContextMenu("main");
+                //int chosenMenu = menuManager.ForceCorrectChoice();
                 Console.Clear();
                 switch (chosenMenu)
                 {
-                    case 0:
-                        { 
-                            Console.WriteLine($"Nie wybrano żadnej poprawnej akcji.");
-                        }
-                        break;
                     case 1:
                         {
-                            customerService.AddNewCustomerView();
+                            customerManager.AddNewCustomerView();
                         }
                         break;
                     case 2:
                         {
-                            DisplayMenu("customerFind", true);
-                            string fieldName = "";
-                            switch (Int32.Parse(Console.ReadLine()))
+                           chosenMenu =  menuManager.CreateContextMenu("customerFind", true);
+                            if (customerManager.CustomerFindView(chosenMenu))
                             {
-                                case 1:
-                                    fieldName = "Id";
-                                    break;
-                                case 2:
-                                    fieldName = "Surname";
-                                    break;
-                                case 3:
-                                    fieldName = "PhoneNumber";
-                                    break;
+                                customerManager.ShowCustomersFoundList();
+                                int idCustomer = customerManager.ShowCustormerDetails();
+                                chosenMenu = menuManager.CreateContextMenu("customerDetails");
+                                customerManager.CustomerDetailsService(chosenMenu, idCustomer);
                             }
-                            Console.WriteLine("Wprowadzć wyszukiwaną wartość:");
-
-                            if (customerService.FindCustomer(fieldName, Console.ReadLine()) == 0)
+                            else
                             {
                                 Console.Clear();
                                 Console.WriteLine("Nie znaleziono danych.");
-                                break;
-                            }
-
-                            customerService.ShowFoundCustomersList();
-                            int customerId = customerService.ShowCustormerDetails();
-                            if (customerId>0)
-                            {
-                                DisplayMenu("customerDetails");
-                                switch (Int32.Parse(Console.ReadLine()))
-                                {
-                                    case 1:
-                                        customerService.RemoveCustomer(customerId);
-                                        Console.Clear();
-                                        Console.WriteLine("Usunięto Klienta.");
-                                        break;
-                                    case 2:
-                                        break;
-                                }
-                                Console.WriteLine("Wprowadzć wyszukiwaną wartość:");
                             }
                         }
                         break;
                     case 3:
                         {
-                            customerService.ShowAllCustomersList();
+                            customerManager.ShowAllCustomersList();
                         }
                         break;
                     case 4:
                         {
-                            customerService.RemoveCustomer(customerService.removeCustomerView());
+                            customerManager.RemoveCustomer(customerManager.ChoiseCustomerView());
                         }
                         break;
                     case 5:
                         {
+                            int idCustomer = customerManager.ShowCustormerDetails();
+                            chosenMenu = menuManager.CreateContextMenu("customerDetails");
+                            customerManager.CustomerDetailsService(chosenMenu, idCustomer);
+                        }
+                        break;
+                    case 6:
+                        {
                             Environment.Exit(0);
-                        } 
+                        }
                         break;
                 }
-                DisplayMenu("main");
+                
                 HandleMainManu();
             }
         }
     }
 }
+
