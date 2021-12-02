@@ -230,5 +230,11 @@ namespace CRM.App.Managers
                     break;
             }
         }
+
+        //public Customer GetCustomerById (int id)
+        //{
+        //    var cusotmer = _customerService.GetItemById(id);
+        //    return cusotmer;
+        //}
     }
 }

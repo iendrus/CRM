@@ -58,6 +58,11 @@ namespace CRM
                         break;
                     case 5:
                         {
+                            // do dodania
+                        }
+                        break;
+                    case 6:
+                        {
                             Environment.Exit(0);
                         }
                         break;
