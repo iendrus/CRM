@@ -48,7 +48,7 @@ namespace CRM.App.Managers
 
             if (getAutoId)
             {
-                idCustomer = _customerService.customers.GetNewId();
+                idCustomer = _customerService.Customers.GetNewId();
                 
             }
             else
@@ -57,7 +57,7 @@ namespace CRM.App.Managers
             }
             
             Customer customer = new Customer(idCustomer, name, surname, phoneNumber);
-            _customerService.customers.AddItem(customer);
+            _customerService.Customers.AddItem(customer);
             Console.Clear();
             Console.WriteLine($"Zapisano poprawnie dane Klienta Id: {idCustomer}\r\n");
         }
@@ -66,12 +66,12 @@ namespace CRM.App.Managers
         public void RemoveCustomer(int id, bool showInfo = true)
         {
             int _id = 0;
-            foreach (var el in _customerService.customers.GetAllItems())
+            foreach (var el in _customerService.Customers.GetAllItems())
 
             {
                 if (el.Id == id)
                 {
-                    _customerService.customers.RemoveItem(el);
+                    _customerService.Customers.RemoveItem(el);
                     _id = id;
                     if (showInfo)
                     {
@@ -105,7 +105,7 @@ namespace CRM.App.Managers
         public void ShowAllCustomersList()
         {
             Console.WriteLine($"===== Lista Klientów ===== \r\n\r\nId | Imię i nazwisko | Numer tel.");
-            foreach (var el in _customerService.customers.GetAllItems())
+            foreach (var el in _customerService.Customers.GetAllItems())
             {
                 Console.WriteLine(el.Id + " | " + el.Name + " " + el.Surname + " | " + el.PhoneNumber);
             }
@@ -143,9 +143,9 @@ namespace CRM.App.Managers
         public void ShowCustomersFoundList()
         {
             Console.Clear();
-            Console.WriteLine($"===== Lista Klientów spełniającyh kryteria ({_customerService.foundCustomers.GetAllItems().Count}) =====  " +
+            Console.WriteLine($"===== Lista Klientów spełniającyh kryteria ({_customerService.FoundCustomers.GetAllItems().Count}) =====  " +
                 $"\r\n\r\nId | Imię i nazwisko | Numer tel.");
-            foreach (var el in _customerService.foundCustomers.GetAllItems())
+            foreach (var el in _customerService.FoundCustomers.GetAllItems())
             {
                 Console.WriteLine(el.Id + " | " + el.Name + " " + el.Surname + " | " + el.PhoneNumber);
             }
@@ -166,7 +166,7 @@ namespace CRM.App.Managers
             Console.Clear();
             string customerInfo = "";
             correct = false;
-            foreach (var el in _customerService.customers.GetAllItems())
+            foreach (var el in _customerService.Customers.GetAllItems())
             {
                 if (typedId == el.Id)
                 {
@@ -194,12 +194,12 @@ namespace CRM.App.Managers
         public void CustomerEditView(int id)
         {
             int _id = 0;
-            foreach (var el in _customerService.customers.GetAllItems())
+            foreach (var el in _customerService.Customers.GetAllItems())
 
             {
                 if (el.Id == id)
                 {
-                    _customerService.customers.RemoveItem(el);
+                    _customerService.Customers.RemoveItem(el);
                     Console.WriteLine($"Usunięto dane Klienta Id: {id}\r\n");
                     _id = id;
                     break;
@@ -231,10 +231,10 @@ namespace CRM.App.Managers
             }
         }
 
-        //public Customer GetCustomerById (int id)
-        //{
-        //    var cusotmer = _customerService.GetItemById(id);
-        //    return cusotmer;
-        //}
+        public Customer GetCustomerById(int id)
+        {
+            var cusotmer = _customerService.Customers.GetItemById(id);
+            return cusotmer;
+        }
     }
 }

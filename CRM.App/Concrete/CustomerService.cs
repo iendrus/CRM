@@ -12,39 +12,39 @@ namespace CRM.App
     public class CustomerService : BaseService<Customer>
     {
 
-        public BaseService<Customer> customers = new BaseService<Customer>();
-        public BaseService<Customer> foundCustomers;
+        public BaseService<Customer> Customers = new BaseService<Customer>();
+        public BaseService<Customer> FoundCustomers;
 
 
         public int CustomerFind(string findField, string findValue)
         {
-            foundCustomers = new BaseService<Customer>();
+            FoundCustomers = new BaseService<Customer>();
 
-            foreach (var el in customers.GetAllItems())
+            foreach (var el in Customers.GetAllItems())
             {
                 switch (findField)
                 {
                     case "Id":
                         if (Int32.Parse(findValue) == el.Id)
                         {
-                            foundCustomers.AddItem(el);
+                            FoundCustomers.AddItem(el);
                         }
                         break;
                     case "Surname":
                         if (findValue.ToLower() == el.Surname.ToLower())
                         {
-                            foundCustomers.AddItem(el);
+                            FoundCustomers.AddItem(el);
                         }
                         break;
                     case "PhoneNumber":
                         if (Int64.Parse(findValue) == el.PhoneNumber)
                         {
-                            foundCustomers.AddItem(el);
+                            FoundCustomers.AddItem(el);
                         }
                         break;
                 }
             }
-            return foundCustomers.GetAllItems().Count;
+            return FoundCustomers.GetAllItems().Count;
         }
     }
 }

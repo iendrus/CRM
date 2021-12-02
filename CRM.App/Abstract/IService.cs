@@ -15,7 +15,7 @@ namespace CRM.App.Abstract
         int AddItem(T item);
         int UpdateItem(T item);
         void RemoveItem(T item);
-        //T GetItemByid(int id);
+        T GetItemById(int id);
 
     }
 

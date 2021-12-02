@@ -59,6 +59,10 @@ namespace CRM
                     case 5:
                         {
                             // do dodania
+                            var customer = customerManager.GetCustomerById(1);
+                            Console.WriteLine(customer.Name);
+                            Console.WriteLine(customer.Surname);
+                            Console.WriteLine(customer.PhoneNumber);
                         }
                         break;
                     case 6:
