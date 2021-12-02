@@ -224,7 +224,6 @@ namespace CRM.App.Managers
                     break;
                 case 2:
                     {
-                        // temp version ;-)
                         RemoveCustomer(idCustomer, false);
                         AddNewCustomerView(false, idCustomer);
                     }

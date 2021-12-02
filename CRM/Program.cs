@@ -58,16 +58,6 @@ namespace CRM
                         break;
                     case 5:
                         {
-                            int idCustomer = customerManager.ShowCustormerDetails();
-                            if (idCustomer > 0)
-                            {
-                                chosenMenu = menuManager.CreateContextMenu("customerDetails");
-                                customerManager.CustomerDetailsService(chosenMenu, idCustomer);
-                            }
-                        }
-                        break;
-                    case 6:
-                        {
                             Environment.Exit(0);
                         }
                         break;
