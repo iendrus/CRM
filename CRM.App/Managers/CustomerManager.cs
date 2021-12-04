@@ -15,12 +15,12 @@ namespace CRM.App.Managers
     public class CustomerManager
     {
 
-        CustomerService _customerService = new CustomerService();
-
-        public CustomerManager()
-        {
-
-        }
+        private CustomerService _customerService = new CustomerService();
+        //private IService<Customer> _customerService;
+        //public CustomerManager(IService<Customer> customerService)
+        //{
+        //    _customerService = customerService;
+        //}
         public void AddNewCustomerView(bool getAutoId = true, int id = 0)
         {
             long phoneNumber = 0;
@@ -49,7 +49,7 @@ namespace CRM.App.Managers
             if (getAutoId)
             {
                 idCustomer = _customerService.Customers.GetNewId();
-                
+             
             }
             else
             {
@@ -110,7 +110,6 @@ namespace CRM.App.Managers
                 Console.WriteLine(el.Id + " | " + el.Name + " " + el.Surname + " | " + el.PhoneNumber);
             }
         }
-
 
         public bool CustomerFindView(int chosenField)
         {
@@ -186,16 +185,12 @@ namespace CRM.App.Managers
             }
             Console.WriteLine(customerInfo);
             return customerId;
-
-
         }
-
 
         public void CustomerEditView(int id)
         {
             int _id = 0;
             foreach (var el in _customerService.Customers.GetAllItems())
-
             {
                 if (el.Id == id)
                 {
