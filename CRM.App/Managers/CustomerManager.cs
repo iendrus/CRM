@@ -15,13 +15,19 @@ namespace CRM.App.Managers
     public class CustomerManager
     {
 
+        // ---- bez implementacji -------------------------------------
         private CustomerService _customerService = new CustomerService();
+        //---------------------------------------------------------------
 
+
+        //// ---- z implementacją  ---------------------------------------
         //private IService<Customer> _customerService;
         //public CustomerManager(IService<Customer> customerService)
         //{
         //    _customerService = customerService;
         //}
+        ////------------------------------------------------------------------
+        
         public void AddNewCustomerView(bool getAutoId = true, int id = 0)
         {
             long phoneNumber = 0;
