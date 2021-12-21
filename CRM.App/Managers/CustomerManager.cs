@@ -16,6 +16,7 @@ namespace CRM.App.Managers
     {
 
         private CustomerService _customerService = new CustomerService();
+
         //private IService<Customer> _customerService;
         //public CustomerManager(IService<Customer> customerService)
         //{
